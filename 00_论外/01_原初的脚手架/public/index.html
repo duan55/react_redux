@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <!-- %PUBLIC_URL% 代表 public文件夹的路径 -->
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <!-- 开启理想视口，用于移动端网页的适配 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- 浏览器页签的颜色 + 地址栏的颜色 (只针对安卓手机的浏览器有效，而且兼容性很垃圾) -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 网站信息介绍 -->
+  <meta name="description" content="typemoon" />
+  <!-- 用于手机保存网站到桌面时的图标 (只支持苹果手机) -->
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!-- 应用加壳时的配置文件 -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+  <title>React App</title>
+</head>
+
+<body>
+  <!-- 若浏览器不支持js的运行才会显示noscript的内容 -->
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!-- 组件都往这个容器放就对了(但是实际上有且仅有一个组件App会往这里放置) -->
+  <div id="root"></div>
+</body>
+
+</html>
