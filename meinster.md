@@ -59,6 +59,8 @@ store.subscribe(()=>{}) 只要redux中任何一个状态发生变化，都会执
     1）reducer的本质是一个函数，接收：preState、action 返回加工后的状态
     2）reducer有两个作用：初始化状态，加工状态
     3）reducer被第一次调用时，是store自动触发的，传递的(preState:undefined,action:{type: "@@redux/INITx.x.x.x.x"})
-（5）在index.js中检测store中状态的改变，一旦发生改变重新渲染<App/>
+（5）在index.js中监测store中状态的改变，一旦发生改变重新渲染<App/>
     备注：redux只负责管理状态，至于状态的改变驱动着页面的展示，要靠程序员自己实现
 
+p101 求和案例完整版
++ action creators  用于自动创建action对象
