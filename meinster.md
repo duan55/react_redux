@@ -27,4 +27,19 @@ reducer不管细节的事情，只处理最为直接的操作，其他逻辑如�
 注意到没有使用其他任何的api，就已经初始化了state，那是因为store会自动调用一次reducer函数
 computerReducer调用了 0 Object { type: "@@redux/INITv.t.g.8.z.4" }  --> 这里preState为0是因为我们使用了形参默认值，去掉后为undefined
 
-5、改造加法：
+5、改造加法，调用reducer：store.dispatch({ type: 'increment', data: parseInt(value) })
+发现store的值确实变了，但是页面显示没有变化
+区别分析：
+使用this.setState的时候，react会自动更新组件的状态，还会重新调用一次render，从而对页面进行刷新
+而Redux只是对状态进行了更新，并没有更新渲染页面的默认动作；即redux内部的状态更改默认是不会对页面进行更新的
+因此需要对redux的状态进行监听，然后调用render来刷新页面
+
+6、api2：store.subscribe(df) 监听状态的变化
+store.subscribe(()=>{}) 只要redux中任何一个状态发生变化，都会执行这个回调函数
+
+6.1 回调函数使用 this.setState({}) 虽然什么都没有，但是其会触发更新+渲染
+
+6.2 this.forceUpdate() 强制刷新页面
+
+6.3 上面两种需要在各个组件都使用componentDidMount()内进行store的订阅，如果组件数量很多，那么就会非常麻烦
+可以直接在入口文件index.js中进行store的订阅，这样就只需要在入口文件中进行一次订阅，然后检测到redux更新之后直接挂载整个App组件，因为DOM diffing算法的存在，这样的渲染效率不会太差
