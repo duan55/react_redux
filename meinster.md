@@ -63,4 +63,5 @@ store.subscribe(()=>{}) 只要redux中任何一个状态发生变化，都会执
     备注：redux只负责管理状态，至于状态的改变驱动着页面的展示，要靠程序员自己实现
 
 p101 求和案例完整版
-+ action creators  用于自动创建action对象
++ action creators  用于自动创建action对象(符合redux的初衷，不要程序员自己去创建这些action对象)
+与reducer类似，各个组件都有对应的action-creator
