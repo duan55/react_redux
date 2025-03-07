@@ -65,3 +65,11 @@ store.subscribe(()=>{}) 只要redux中任何一个状态发生变化，都会执
 p101 求和案例完整版
 + action creators  用于自动创建action对象(符合redux的初衷，不要程序员自己去创建这些action对象)
 与reducer类似，各个组件都有对应的action-creator
+
+注意到type这种写操作类型的常量值，万一写错了 很难排查，因此我们需要一个存常量值的文件来保证编码的错误率尽量低
+而且如果这个常量以后需要更改名称，只需要改源头即可，非常方便！！！
+
+小结：
+新增文件：
+1、computer_action.js 专门用于创建action对象
+2、constant.js 放置由于编码疏忽写错action中的type；统一管理魔法值

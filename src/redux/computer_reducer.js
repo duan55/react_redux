@@ -2,6 +2,7 @@
     1.该文件是用于创建一个为Computer组件服务的reducer,reducer的本质就是一个函数
     2.reducer函数会接收到两个参数,分别为:之前的状态(preState),和要执行的动作对象(action)
 */
+import { INCREMENT, DECREMENT } from './constant'
 
 //初始化状态
 const initState = 0; 
@@ -15,9 +16,9 @@ export default function computerReducer(preState = initState, action) {
 
     //因为type的种类一般都比较多，不推荐使用ifelse，使用switch来解析type决定如何加工数据
     switch (type) {
-        case 'increment':
+        case INCREMENT:
             return preState + data;
-        case 'decrement':
+        case DECREMENT:
             return preState - data;
 
         //reducer中不做额外的判断等等，这些步骤应该放在组件中执行
