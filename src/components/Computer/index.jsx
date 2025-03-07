@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 //引入store，用于获取redux中保存的状态
 import store from '../../redux/store'
 //引入action-creator，用于创建action对象
-import { createIncrementAction, createDecrementAction } from '../../redux/computer_action_creator'
+import { createIncrementAction, createDecrementAction, createIncrementAsycnAction } from '../../redux/computer_action_creator'
 
 export default class Computer extends Component {
 
@@ -53,12 +53,18 @@ export default class Computer extends Component {
         }
     }
 
-    //async
+    //async-同步action
+    // incrementAsync = () => {
+    //     const { value } = this.selectNum
+    //     setTimeout(() => {
+    //         store.dispatch(createIncrementAction(parseInt(value)))
+    //     }, 666)
+    // }
+
+    // async-异步action
     incrementAsync = () => {
         const { value } = this.selectNum
-        setTimeout(() => {
-            store.dispatch(createIncrementAction(parseInt(value)))
-        }, 666)
+        store.dispatch(createIncrementAsycnAction(parseInt(value)))
     }
 
     render() {

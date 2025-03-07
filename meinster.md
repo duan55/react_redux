@@ -73,3 +73,9 @@ p101 求和案例完整版
 新增文件：
 1、computer_action.js 专门用于创建action对象
 2、constant.js 放置由于编码疏忽写错action中的type；统一管理魔法值
+
+redux进阶
+p102 redux进阶之异步action
+同步action 与 异步action 的区别
+首先要认识到，action是js中的一般Object对象，但也可以是一个函数function
+一般对象的action叫做同步action，函数类型的action叫做异步action
