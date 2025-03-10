@@ -118,3 +118,12 @@ react-redux模型的理解：(详见图片：react-redux模型图.png)
   (1)redux中所保存的状态
   (2)用于操作状态的方法
 5.备注:容器给UI传递:redux的状态、redux中操作状态的方法，均通过props传递
+
+p104 连接容器组件与UI组件
+UI组件 放components中
+容器组件 放container中
+改造ui组件，使其中不能包含任何的redux的api，负责页面的呈现和绑定用户的事件(鼠标事件、键盘事件等)
+
+注意到容器组件不能使用rcc快捷创建了，因为其比较复杂，需要借助react-redux来创建
+npm i react-redux
+容器组件是一个桥梁，链接redux与ui组件
