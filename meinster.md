@@ -79,3 +79,30 @@ p102 redux进阶之异步action
 同步action 与 异步action 的区别
 首先要认识到，action是js中的一般Object对象，但也可以是一个函数function
 一般对象的action叫做同步action，函数类型的action叫做异步action
+如果直接传递异步action给store.dispatch()，其会报错并提示以下内容：
+![image-20250310103244031](meinster.assets/image-20250310103244031.png)
+大体内容为：Actions must be plain objects. Instead, the actual type was: 'function'. You may need to add middleware to your store setup to handle dispatching other values, such as 'redux-thunk' to handle dispatching functions
+提示如果向store传递非一般对象的action对象需要使用中间件来处理
+中间件的作用；当检测到传到store的action对象为非一般对象(function)的场合发动，该动作会变为执行action对象(function)函数一次
+
+引入redux-thunk中间件 
+npm i redux-thunk
+thunk - 形实转换程式
+接下来在store.js中引入中间件redux-thunk，使其支持异步action；其为默认暴露直接引入即可
+需要在redux中引入applyMiddleware函数，并将中间件作为参数传入；整体作为第二个参数传入到createStore中
+
+import { legacy_createStore as createStore, applyMiddleware} from 'redux'
+import computerReducer from './computer_reducer'
+import { thunk } from 'redux-thunk'; 
+export default createStore(computerReducer, applyMiddleware(thunk))
+
+因为store.dispatch(异步action)，而异步action一般会调用同步action，因此在这个回调函数里可以直接传dispatch，可以避免引入store.js
+
+总结：
+(1)明确：延迟的动作不想交给组件自身，想交给action
+(2)何时需要异步action：想要对状态进行操作，但是具体的数据靠异步任务返回
+(3)具体编码：
+ 1.npm i redux-thunk，并配置在store中
+ 2.创建action的函数不再返回一般对象，而是一个函数，该函数中写想要的异步任务；从而实现不再组件等待而是store去管理
+ 3.异步任务有结果后，分发一个同步的action去真正操作数据
+(4)备注：异步action不是必须要写的，完全可以自己等待异步任务的结果了再去分发同步action

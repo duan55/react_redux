@@ -64,7 +64,7 @@ export default class Computer extends Component {
     // async-异步action
     incrementAsync = () => {
         const { value } = this.selectNum
-        store.dispatch(createIncrementAsycnAction(parseInt(value)))
+        store.dispatch(createIncrementAsycnAction(parseInt(value), 666))
     }
 
     render() {
