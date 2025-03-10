@@ -106,3 +106,15 @@ export default createStore(computerReducer, applyMiddleware(thunk))
  2.创建action的函数不再返回一般对象，而是一个函数，该函数中写想要的异步任务；从而实现不再组件等待而是store去管理
  3.异步任务有结果后，分发一个同步的action去真正操作数据
 (4)备注：异步action不是必须要写的，完全可以自己等待异步任务的结果了再去分发同步action
+
+p103 对react-redux的理解
+react与redux是不同的出版方，facebook为了简化程序员编码，将redux出了react版本，即react-redux
+
+react-redux模型的理解：(详见图片：react-redux模型图.png)
+1.所有的UI组件都应该被包裹在一个容器组件中，他们是父子关系(容器组件是父，UI组件是子)
+2.容器组件是真正和redux打交道的，其可以随意的使用redux的api
+3.UI组件中不能使用任何redux的api
+4.容器组件会传给UI组件:
+  (1)redux中所保存的状态
+  (2)用于操作状态的方法
+5.备注:容器给UI传递:redux的状态、redux中操作状态的方法，均通过props传递
