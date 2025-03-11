@@ -127,3 +127,5 @@ UI组件 放components中
 注意到容器组件不能使用rcc快捷创建了，因为其比较复杂，需要借助react-redux来创建
 npm i react-redux
 容器组件是一个桥梁，链接redux与ui组件
+
+注意到 容器组件中的store不能由程序员在代码层面引入，必须在其被调用的层级以props的形式传入相应的store
