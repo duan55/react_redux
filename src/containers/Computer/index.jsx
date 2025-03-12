@@ -1,57 +1,38 @@
 //引入本容器组件的ui组件，即Computer的UI组件
 import ComputerUI from '../../components/Computer'
-//引入redux，而这里只需要引入核心的store即可，其他的部分不用  <<< 容器组件中的store不能由程序员在代码层面引入，必须在其被调用的层级以props的形式传入相应的store
-// import store from '../../redux/store'
 //引入connect用于连接UI组件与redux
 import { connect } from 'react-redux'
-
 //引入action creator
 import { createIncrementAction, createDecrementAction, createIncrementAsycnAction } from '../../redux/computer_action_creator'
 
-
-//connect()()的作用是将connect()函数的执行返回结果再次执行(注意到connect()的返回是一个函数，而connect()()的返回结果是一个container)
-// const ComputerContainer = connect()(ComputerUI)
-// export default ComputerContainer
-
 //使用connect()()创建并暴露一个Computer的容器组件
-export default connect(mapStateToProps, mapDispatchToProps)(ComputerUI)
-
-//func1函数返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value - 此处传的是 状态
-function mapStateToProps(state) {
-    return { sum: state }
-}
-
-//func2函数返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value - 此处传的是 操作状态的方法
-// function func2() {
-//     return {
-//         increment: (number) => {
-//             //通知redux执行加法操作
-//             store.dispatch({ type: INCREMENT, data: number })
-//         }
-//     }
-// }
-
-//注意到func2中一定会用到store.dispatch，因此react-redux会直接将dispatch传入到func2中，故可以省略引入： import store from '../../redux/store'
-function mapDispatchToProps(dispatch) {
-    return {
-        increment: (number) => {
-            //通知redux执行加法操作
-            dispatch(createIncrementAction(number))
-        },
-        decrement: (number) => {
-            //通知redux执行减法操作
-            dispatch(createDecrementAction(number))
-        },
-        incrementAsync: (number, delay) => {
-            //通知redux执行异步加法操作
-            dispatch(createIncrementAsycnAction(number, delay))
-        }
+export default connect(
+    state => ({ sum: state }),
+    //mapDispatchToProps的最终简化写法
+    {
+        //因为调用this.props.increment的场合，实际上会携带对应的参数调用createIncrementAction；至此会返回一个action对象，而react-redux经过优化会自动识别到action对象后，自动dispatch该action对象!!!!!
+        increment:createIncrementAction,
+        decrement:createDecrementAction,
+        incrementAsync:createIncrementAsycnAction
     }
-}
+    //mapDispatchToProps的一般写法
+    // dispatch => ({
+    //     increment: number => dispatch(createIncrementAction(number)),
+    //     decrement: number => dispatch(createDecrementAction(number)),
+    //     incrementAsync: (number, delay) => dispatch(createIncrementAsycnAction(number, delay)),
+    // })
+)(ComputerUI)
 
-/**
- * 小结：
- * 1.mapStateToProps(mapDispatchToProps)函数返回的是一个对象
- * 2.返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value
- * 3.mapStateToprops(mapDispatchToProps)用于传递状态(传递操作状态的方法)
- * */
+
+// 箭头函数如果参数就一个就可以不写小括号 + 箭头函数的右边函数体只有一句且就一个默认的{return 值}的形式 则可以写成一个返回的对象的形式
+
+//映射状态
+// const mapStateToProps = state => ({ sum: state })
+//映射操作状态的方法
+// const mapDispatchToProps = dispatch => ({
+//     increment: number => dispatch(createIncrementAction(number)),
+//     decrement: number => dispatch(createDecrementAction(number)),
+//     incrementAsync: (number, delay) => dispatch(createIncrementAsycnAction(number, delay))
+// })
+//使用connect()()创建并暴露一个Computer的容器组件
+// export default connect(mapStateToProps, mapDispatchToProps)(ComputerUI)

@@ -204,3 +204,45 @@ function mapDispatchToProps(dispatch) {
  * 2.返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value
  * 3.mapStateToprops(mapDispatchToProps)用于传递状态(传递操作状态的方法)
  * */
+
+小结：求和案例_react-redux基本使用
+(1)明确两个概念：
+1、UI组件：不能使用任何redux的api，只负责页面的呈现、交互等
+2、容器组件：负责和redux通信，将结果交给UI组件
+(2)如何创建一个容器组件--靠react-redux的connect函数
+connect(mapStateToProps, mapDispatchToProps)(UI组件)
+-mapStateToProps:映射状态，返回值是一个对象
+-mapDispatchToProps:映射操作状态的方法，返回值是一个对象
+(3)备注：容器组件中的store是靠props传进去的，而不是在容器组件中直接引入
+ 
+
+p106 优化1-简写mapDispatch
+箭头函数如果参数就一个就可以不写小括号 + 箭头函数的右边函数体只有一句且就一个默认的{return 值}的形式 则可以写成一个返回的对象的形式
+最后可以将所有的函数直接将箭头函数的()=>{}部分丢入到connect()的参数中，使得整体容器组件更加袖珍简洁
+类似与下面这个效果：
+export default connect(
+    state => ({ sum: state }), 
+    dispatch => ({
+        increment: number => dispatch(createIncrementAction(number)),
+        decrement: number => dispatch(createDecrementAction(number)),
+        incrementAsync: (number, delay) => dispatch(createIncrementAsycnAction(number, delay)),
+    })
+)(ComputerUI)
+
+mapDispatchToProps的一般写法：
+dispatch => ({
+    increment: number => dispatch(createIncrementAction(number)),
+    decrement: number => dispatch(createDecrementAction(number)),
+    incrementAsync: (number, delay) => dispatch(createIncrementAsycnAction(number, delay)),
+})
+其还可以优化为一个对象的写法：
+因为调用this.props.increment的场合，实际上会携带对应的参数调用createIncrementAction；
+至此会返回一个action对象，而react-redux经过优化会自动识别到action对象后，自动dispatch该action对象!!!!!
+{
+  increment:createIncrementAction,
+  decrement:createDecrementAction,
+  incrementAsync:createIncrementAsycnAction
+}
+所以说connect()中传入的第二个参数可以是一个函数 也可以是一个对象，如果是对象，则会自动将其中的函数映射到props上，并自动dispatch该函数的返回值
+小结：求和案例_react-redux基本使用
+(4)备注ex: mapDispatchToProps也可以是一个对象
