@@ -130,4 +130,77 @@ npm i react-redux
 
 注意到 容器组件中的store不能由程序员在代码层面引入，必须在其被调用的层级以props的形式传入相应的store
 
-p105 react-redux的基本使用
+p105 react-redux的基本使用 *****
+首先要明确认识到容器组件是UI组件的父组件，详见pic/02
+
+容器组件需要借助<props参数>给UI组件传递： 1、redux中保存的状态 2、用于操作状态的方法
+
+因为这个父子组件关系是使用connect()()来实现链接的，不能像传统方法一样使用<A><B parma1 = xxx ...><A/>来传递props参数
+
+所以传递props的方法就是：
+在connect()()第一次调用的时候需要传入两个参数，注意到这里说的第一次调用是connect()这个部分，后续的()是调用connect()返回的函数
+
+connect(func1,func2)(XYZ)且这两个参数必须是函数
+//func1函数返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value - 此处传的是 状态
+function func1(){
+  return {param1:xxx,param2:xxx,...} ~ <XYZ param1 = {param1} param2 = {param2}.../>
+}
+
+//func2函数返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value - 此处传的是 操作状态的方法
+function func2(){
+  return {increament:()=>{console.log('increament')}}
+}
+
+注意到react-redux在调用func1的场合，已经调用了store.getState函数(早在第一步容器组件中就传入了state作为props参数)
+因此func1(state)可以直接接收store.getState的调用结果
+//func1函数返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value - 此处传的是 状态
+function func1(state) {
+    return { sum: state }
+}
+
+现在优化func2中给到子组件用来操作状态的函数
+//func2函数返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value - 此处传的是 操作状态的方法
+function func2() {
+    return {
+        increment: (number) => {
+            //通知redux执行加法操作
+            store.dispatch({ type: INCREMENT, data: number })
+        }
+    }
+}
+
+//注意到func2中一定会用到store.dispatch，因此react-redux会直接将dispatch传入到func2中，故可以省略引入： import store from '../../redux/store'
+function func2(dispatch) {
+    return {
+        increment: (number) => {
+            //通知redux执行加法操作
+            dispatch({ type: INCREMENT, data: number })
+        }
+    }
+}
+
+可以发现react-redux对func1 func2的传入值都有了很好的预先处理，但是目前还缺少一个aciton对象的creatorjs没有被很好地使用
+先将func1,func2的命名官方化：mapStateToProps,mapDispatchToProps
+function mapDispatchToProps(dispatch) {
+    return {
+        increment: (number) => {
+            //通知redux执行加法操作
+            dispatch(createIncrementAction(number))
+        },
+        decrement: (number) => {
+            //通知redux执行减法操作
+            dispatch(createDecrementAction(number))
+        },
+        incrementAsync: (number, delay) => {
+            //通知redux执行异步加法操作
+            dispatch(createIncrementAsycnAction(number, delay))
+        }
+    }
+}
+
+/**
+ * 小结：核心是connect()()函数的理解
+ * 1.mapStateToProps(mapDispatchToProps)函数返回的是一个对象
+ * 2.返回的对象中的key就作为传递给UI组件props的key，value就作为传递给UI组件的props的value
+ * 3.mapStateToprops(mapDispatchToProps)用于传递状态(传递操作状态的方法)
+ * */
