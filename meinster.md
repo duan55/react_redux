@@ -250,3 +250,4 @@ dispatch => ({
 对象的情况下，react-redux检测到返回值是一个action对象时，会自动调用dispatch
 
 p107 优化2-Provider组件的使用
+在使用了react-redux的情况下，不再需要使用store.subscribe()方法来监听redux的状态变化，而是直接在容器组件中使用connect()方法来订阅redux的状态变化
