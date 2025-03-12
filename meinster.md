@@ -245,4 +245,8 @@ dispatch => ({
 }
 所以说connect()中传入的第二个参数可以是一个函数 也可以是一个对象，如果是对象，则会自动将其中的函数映射到props上，并自动dispatch该函数的返回值
 小结：求和案例_react-redux基本使用
-(4)备注ex: mapDispatchToProps也可以是一个对象
+(4)备注ex: mapDispatchToProps也可以是一个对象，
+函数的情况下，程序员自己写dispatch
+对象的情况下，react-redux检测到返回值是一个action对象时，会自动调用dispatch
+
+p107 优化2-Provider组件的使用
