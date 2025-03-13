@@ -285,11 +285,7 @@ react-redux版： 组件{容器组件+UI组件} + redux
 - 1、定义好UI组件---不暴露
 - 2、引入connect生成一个容器组件，并暴露，写法如下：
     connect(
-        state=>({key:value}),
-        {
-            key1:actionCreator1,
-            key2:actionCreator2,
-           ...
-        }
+        state=>({key:value}),   //映射状态
+        {key1:actionCreator1,key2:actionCreator2,...}   //映射操作状态的方法}
     )(UI组件)
-- 3、
+- 3、在UI组件中通过this.props.xxx来读取状态、使用操作状态的方法
