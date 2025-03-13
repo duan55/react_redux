@@ -265,3 +265,31 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(Provider(<App/>, store));
 
 因此不使用rcc来写容器组件的原因就是react-redux中提供了connect等很多功能，能够简化许多代码的编写，有很多预先定义的API与遍历设置
+
+p108 优化3-整合UI组件与容器组件
+redux版： 组件 + redux
+react-redux版： 组件{容器组件+UI组件} + redux
+可以发现这样的redux->react-redux的切换，会使得组件从1一个变为2个(组件->容器组件+UI组件)
+如果使用redux的组件多起来了，那么这个1变2的过程就会非常繁琐，工作量成倍增加，因此现在需要将容器组价和UI组件整合合并起来
+也就是说react-redux虽然要求要有两类组件，但是没有规定这两个组件必须写为两个文件，现在可以将一套容器UI写在一个js中
+
+因为最终要暴露的肯定是外层的容器组件，因此将UI组件放到容器组件中，优化暴露的组件数、引用情况以及函数名称等等
+大致结构见pic/03_容器融合UI.png
+
+优化的总结：
+1、容器组件和UI组件整合为一个文件
+2、无需自己给容器组件传递store，给<App/>包裹一个<Provider store={store}>即可
+3、使用了react-redux后也不用自己检测redux中状态的改变了，容器组件可以自动完成这个工作
+4、mapDispatchToProps也可以简单的写成一个对象
+5、一个组件要和redux交互需要经过的步骤：
+- 1、定义好UI组件---不暴露
+- 2、引入connect生成一个容器组件，并暴露，写法如下：
+    connect(
+        state=>({key:value}),
+        {
+            key1:actionCreator1,
+            key2:actionCreator2,
+           ...
+        }
+    )(UI组件)
+- 3、
