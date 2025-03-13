@@ -250,4 +250,18 @@ dispatch => ({
 对象的情况下，react-redux检测到返回值是一个action对象时，会自动调用dispatch
 
 p107 优化2-Provider组件的使用
-在使用了react-redux的情况下，不再需要使用store.subscribe()方法来监听redux的状态变化，而是直接在容器组件中使用connect()方法来订阅redux的状态变化
+1、在使用了react-redux的情况下，不再需要使用store.subscribe()方法来监听redux的状态变化;那是因为直接在容器组件中使用connect()方法来订阅redux的状态变化
+2、容器组件中的store是作为props参数在App.js中传入的，如果有1e个容器组件我就要写1e次props吗？
+-当然不需要，可以使用Provider组件来统一管理store，只需要在入口文件index.js中引入Provider组件，并将store作为props参数传入即可！！！
+import { Provider } from 'react-redux';
+把所有容器组件都需要的store传入Provider，那之后Provider会自动分析整个应用所有的容器组件，把store精准地传入所有需要store的容器组件；
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App/>);
+\ 初版
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<Provider store={store}><App/></Provider>);
+\ AI提示的简写版：但是好像用不了！！！
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(Provider(<App/>, store));
+
+因此不使用rcc来写容器组件的原因就是react-redux中提供了connect等很多功能，能够简化许多代码的编写，有很多预先定义的API与遍历设置
