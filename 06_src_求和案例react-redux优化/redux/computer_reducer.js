@@ -35,7 +35,4 @@ export default function computerReducer(preState = initState, action) {
             //无任何类型，即初始化时的调用情况
             return preState;
     }
-
-    
-
 }

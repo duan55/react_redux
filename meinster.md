@@ -289,3 +289,7 @@ react-redux版： 组件{容器组件+UI组件} + redux
         {key1:actionCreator1,key2:actionCreator2,...}   //映射操作状态的方法}
     )(UI组件)
 - 3、在UI组件中通过this.props.xxx来读取状态、使用操作状态的方法
+
+
+p109 数据共享-编写Person组件
+首先将action_creator、reducer进行分文件夹存储；由于constant与store是通用的仅有一个，所以不做额外处理
