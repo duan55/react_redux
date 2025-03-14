@@ -38,7 +38,8 @@ class Computer extends Component {
         // console.log("UI组件接收到的props是=>",this.props)
         return (
             <div>
-                <h1>当前求和为:{this.props.sum}</h1>
+                <h2>Computer组件</h2>
+                <h4>当前求和为:{this.props.sum}</h4>
                 <select ref={i => this.selectNum = i}>
                     <option value="1">1</option>
                     <option value="2">2</option>
