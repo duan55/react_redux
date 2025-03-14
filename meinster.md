@@ -305,3 +305,5 @@ const allReducers = combineReducers({
     stateValueName2: reducer2,
    ...
 })
+
+p112 纯函数
