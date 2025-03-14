@@ -7,7 +7,6 @@ export const createIncrementAction = data => ({type: INCREMENT, data});
 //同步action-减
 export const createDecrementAction = data => ({type: DECREMENT, data});
 
-
 //异步action-加 
 export const createIncrementAsycnAction = (data,delay) => {
     return (dispatch) => {

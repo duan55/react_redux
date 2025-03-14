@@ -293,3 +293,5 @@ react-redux版： 组件{容器组件+UI组件} + redux
 
 p109 数据共享-编写Person组件
 首先将action_creator、reducer进行分文件夹存储；由于constant与store是通用的仅有一个，所以不做额外处理
+
+p110 数据共享-编写Person组件的reducer
