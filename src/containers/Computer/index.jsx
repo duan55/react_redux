@@ -39,7 +39,7 @@ class Computer extends Component {
         return (
             <div>
                 <h2>Computer组件</h2>
-                <h4>当前求和为:{this.props.sum}</h4>
+                <h4>当前求和为:{this.props.sum},当前人数:{this.props.howManyPeople}</h4>
                 <select ref={i => this.selectNum = i}>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -56,7 +56,10 @@ class Computer extends Component {
 
 //使用connect()()创建并暴露一个Computer的容器组件
 export default connect(
-    state => ({ sum: state }),
+    state => ({
+        sum: state.sum,
+        howManyPeople: state.persons.length
+    }),
     {
         increment: createIncrementAction,
         decrement: createDecrementAction,

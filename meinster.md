@@ -295,3 +295,13 @@ p109 数据共享-编写Person组件
 首先将action_creator、reducer进行分文件夹存储；由于constant与store是通用的仅有一个，所以不做额外处理
 
 p110 数据共享-编写Person组件的reducer
+注意传入对象与修改对象的方式即可
+
+p111 数据共享-完成数据共享收尾
+1、当redux为多个组件服务的场合，其存储的state将是一个键值对的对象来储存
+2、当有多个reducer的场合需要使用combineReducers来合并reducer
+const allReducers = combineReducers({
+    stateValueName1: reducer1,
+    stateValueName2: reducer2,
+   ...
+})

@@ -7,7 +7,7 @@ import { INCREMENT, DECREMENT } from '../constant'
 //初始化状态
 const initState = 0;
 export default function computerReducer(preState = initState, action) {
-    console.log('computerReducer调用了', preState, action);
+    // console.log('computerReducer调用了', preState, action);
 
     const { type, data } = action
 
