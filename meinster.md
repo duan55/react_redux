@@ -299,11 +299,42 @@ p110 数据共享-编写Person组件的reducer
 
 p111 数据共享-完成数据共享收尾
 1、当redux为多个组件服务的场合，其存储的state将是一个键值对的对象来储存
+
 2、当有多个reducer的场合需要使用combineReducers来合并reducer
+import { legacy_createStore as createStore, applyMiddleware, combineReducers } from 'redux'
 const allReducers = combineReducers({
     stateValueName1: reducer1,
     stateValueName2: reducer2,
    ...
 })
 
+总结：
+1、定义一个Person组件，和Computer组件通过redux共享数据
+2、为Person组件编写：reducer、action，配置constant常量
+3、重点：Person的reducer和Computer的reducer要使用combineReducers合并，合并后的总状态是一个对象
+4、交给store的是总reducer，最后注意在组件中取出状态的时候，记得"取到位"
+
+
+
 p112 纯函数
+
+在reducers/person中有这样一段代码：
+switch (type) {
+    case ADD_PERSON:
+        return [data, ...preState]
+    default:
+        return preState
+}
+---
+case ADD_PERSON:
+    return [data, ...preState]
+为什么不写成这样呢：
+case ADD_PERSON:
+    preState.unshift(data)//push是在末尾添加，而unshift是在开头
+    return preState
+发现这样写之后，状态没有被更新!!!
+那是因为redux中 如果reducer执行中 返回的状态(state)与之前的状态(preState)如果是"一样的"，则页面不会进行更新；
+但是注意到这些state并非简单的值，而是对象!!!也就是说redux比较的并非他们的值，而是直接比较的地址
+
+
+    
